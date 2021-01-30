@@ -8,27 +8,18 @@ declare(strict_types=1);
  * @document https://github.com/friendsofhyperf/lock/blob/main/README.md
  * @contact  huangdijia@gmail.com
  */
-namespace FriendsOfHyperf\Lock\driver;
+namespace FriendsOfHyperf\Lock\Drivers;
 
-use Hyperf\Redis\Redis;
+use Hyperf\Cache\Driver\CoroutineMemoryDriver;
 
-class RedisLock extends AbstractLock
+class CoroutineMemoryLock extends AbstractLock
 {
     /**
-     * The Redis factory implementation.
-     *
-     * @var Redis
+     * @var CoroutineMemoryDriver
      */
     protected $store;
 
-    /**
-     * Create a new lock instance.
-     *
-     * @param string $name
-     * @param int $seconds
-     * @param null|string $owner
-     */
-    public function __construct(Redis $store, $name, $seconds, $owner = null)
+    public function __construct(CoroutineMemoryDriver $store, $name, $seconds, $owner = null)
     {
         parent::__construct($name, $seconds, $owner);
 
@@ -42,11 +33,11 @@ class RedisLock extends AbstractLock
      */
     public function acquire()
     {
-        if ($this->seconds > 0) {
-            return $this->store->set($this->name, $this->owner, ['NX', 'EX' => $this->seconds]) == true;
+        if ($this->store->has($this->name)) {
+            return false;
         }
 
-        return $this->store->setnx($this->name, $this->owner) === 1;
+        return $this->store->set($this->name, $this->owner, $this->seconds) == true;
     }
 
     /**
@@ -56,7 +47,7 @@ class RedisLock extends AbstractLock
      */
     public function release()
     {
-        return (bool) $this->store->eval(LuaScripts::releaseLock(), 1, $this->name, $this->owner);
+        return $this->forceRelease();
     }
 
     /**
@@ -64,7 +55,7 @@ class RedisLock extends AbstractLock
      */
     public function forceRelease()
     {
-        $this->store->del($this->name);
+        return $this->store->delete($this->name);
     }
 
     /**

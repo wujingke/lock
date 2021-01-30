@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @document https://github.com/friendsofhyperf/lock/blob/main/README.md
  * @contact  huangdijia@gmail.com
  */
-namespace FriendsOfHyperf\Lock\driver;
+namespace FriendsOfHyperf\Lock\Drivers;
 
 class LuaScripts
 {

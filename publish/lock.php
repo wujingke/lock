@@ -10,15 +10,15 @@ declare(strict_types=1);
  */
 return [
     'default' => [
-        'driver' => FriendsOfHyperf\Lock\driver\RedisLock::class,
+        'driver' => FriendsOfHyperf\Lock\Drivers\RedisLock::class,
     ],
     'co' => [
-        'driver' => FriendsOfHyperf\Lock\driver\CoroutineMemoryLock::class,
+        'driver' => FriendsOfHyperf\Lock\Drivers\CoroutineMemoryLock::class,
     ],
     'file' => [
-        'driver' => FriendsOfHyperf\Lock\driver\FileSystemLock::class,
+        'driver' => FriendsOfHyperf\Lock\Drivers\FileSystemLock::class,
     ],
     'cache' => [
-        'driver' => FriendsOfHyperf\Lock\driver\CacheLock::class,
+        'driver' => FriendsOfHyperf\Lock\Drivers\CacheLock::class,
     ],
 ];
