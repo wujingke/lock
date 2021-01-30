@@ -57,7 +57,7 @@ class RedisLock extends AbstractLock
      */
     public function release()
     {
-        return (bool) $this->store->eval(LuaScripts::releaseLock(), 1, $this->name, $this->owner);
+        return (bool) $this->store->eval(LuaScripts::releaseLock(), [$this->name, $this->owner], 1);
     }
 
     /**
