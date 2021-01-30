@@ -37,7 +37,9 @@ class CoroutineMemoryLock extends AbstractLock
             return false;
         }
 
-        return $this->store->set($this->name, $this->owner, $this->seconds) == true;
+        $this->store->set($this->name, $this->owner, $this->seconds);
+
+        return true;
     }
 
     /**

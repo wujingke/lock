@@ -12,13 +12,7 @@ return [
     'default' => [
         'driver' => FriendsOfHyperf\Lock\Drivers\RedisLock::class,
     ],
-    'co' => [
-        'driver' => FriendsOfHyperf\Lock\Drivers\CoroutineMemoryLock::class,
-    ],
     'file' => [
         'driver' => FriendsOfHyperf\Lock\Drivers\FileSystemLock::class,
-    ],
-    'cache' => [
-        'driver' => FriendsOfHyperf\Lock\Drivers\CacheLock::class,
     ],
 ];
