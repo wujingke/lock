@@ -19,11 +19,11 @@ class CoroutineMemoryLock extends AbstractLock
      */
     protected $store;
 
-    public function __construct(CoroutineMemoryDriver $store, $name, $seconds, $owner = null)
+    public function __construct($name, $seconds, $owner = null, array $config = [])
     {
         parent::__construct($name, $seconds, $owner);
 
-        $this->store = $store;
+        $this->store = make(CoroutineMemoryDriver::class, ['config' => $config]);
     }
 
     /**

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace FriendsOfHyperf\Lock\Drivers;
 
 use Hyperf\Redis\Redis;
+use Hyperf\Utils\ApplicationContext;
 
 class RedisLock extends AbstractLock
 {
@@ -28,11 +29,11 @@ class RedisLock extends AbstractLock
      * @param int $seconds
      * @param null|string $owner
      */
-    public function __construct(Redis $store, $name, $seconds, $owner = null)
+    public function __construct($name, $seconds, $owner = null)
     {
         parent::__construct($name, $seconds, $owner);
 
-        $this->store = $store;
+        $this->store = ApplicationContext::getContainer()->get(Redis::class);
     }
 
     /**

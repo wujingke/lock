@@ -38,12 +38,14 @@ class Lock
             throw new InvalidArgumentException(sprintf('The lock config %s is invalid.', $driver));
         }
 
-        $driverClass = $config->get("lock.{$driver}.driver") ?? RedisLock::class;
+        $driverClass = $config->get("lock.{$driver}.driver", RedisLock::class);
+        $config = $config->get("lock.{$driver}.config", []);
 
         return make($driverClass, [
             'name' => $name,
             'seconds' => $seconds,
             'owner' => $owner,
+            'config' => $config,
         ]);
     }
 }
