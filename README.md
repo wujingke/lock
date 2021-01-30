@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/friendsofhyperf/lock/d/total.png)](https://packagist.org/packages/friendsofhyperf/lock)
 [![GitHub license](https://img.shields.io/github/license/friendsofhyperf/lock)](https://github.com/friendsofhyperf/lock)
 
-Lock component for hyperf. [中文说明](README.md)
+Lock component for hyperf. [中文说明](README_CN.md)
 
 ## Installation
 
