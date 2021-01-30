@@ -28,11 +28,11 @@ class FileSystemLock extends AbstractLock
      * @param int $seconds
      * @param null|string $owner
      */
-    public function __construct($name, $seconds, $owner = null, array $config = [])
+    public function __construct($name, $seconds, $owner = null, array $constructor = ['config' => []])
     {
         parent::__construct($name, $seconds, $owner);
 
-        $this->store = make(FileSystemDriver::class, ['config' => $config]);
+        $this->store = make(FileSystemDriver::class, $constructor);
     }
 
     /**

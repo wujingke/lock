@@ -17,7 +17,7 @@ use Hyperf\Utils\ApplicationContext;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 
-class Lock
+class LockFactory
 {
     /**
      * Get a lock instance.
@@ -29,6 +29,7 @@ class Lock
      */
     public static function make($name, $seconds = 0, $owner = null, $driver = 'default'): LockInterface
     {
+        $driver = $driver ?: 'default';
         /** @var ContainerInterface $container */
         $container = ApplicationContext::getContainer();
         /** @var ConfigInterface $config */
@@ -39,13 +40,13 @@ class Lock
         }
 
         $driverClass = $config->get("lock.{$driver}.driver", RedisLock::class);
-        $config = $config->get("lock.{$driver}.config", []);
+        $constructor = $config->get("lock.{$driver}.constructor", ['config' => []]);
 
         return make($driverClass, [
             'name' => $name,
             'seconds' => $seconds,
             'owner' => $owner,
-            'config' => $config,
+            'constructor' => $constructor,
         ]);
     }
 }

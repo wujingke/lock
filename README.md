@@ -22,12 +22,12 @@ php bin/hyperf.php vendor:publish friendsofhyperf/lock
 
 ## Usage
 
-你可以使用 `Lock::make()` 方法来创建和管理锁：
+你可以使用 `LockFactory::make()` 方法来创建和管理锁：
 
 ```php
-use FriendsOfHyperf\Lock\Lock;
+use FriendsOfHyperf\Lock\LockFactory;
 
-$lock = Lock::make($name = 'foo', $seconds = 10, $owner = null);
+$lock = LockFactory::make($name = 'foo', $seconds = 10, $owner = null);
 
 if ($lock->get()) {
     // 获取锁定10秒...
@@ -39,7 +39,7 @@ if ($lock->get()) {
 `get` 方法也可以接收一个闭包。在闭包执行之后，将会自动释放锁：
 
 ```php
-Lock::make('foo')->get(function () {
+LockFactory::make('foo')->get(function () {
     // 获取无限期锁并自动释放...
 });
 ```
@@ -48,9 +48,9 @@ Lock::make('foo')->get(function () {
 
 ```php
 use FriendsOfHyperf\Lock\Exception\LockTimeoutException;
-use FriendsOfHyperf\Lock\Lock;
+use FriendsOfHyperf\Lock\LockFactory;
 
-$lock = Lock::make('foo', 10);
+$lock = LockFactory::make('foo', 10);
 
 try {
     $lock->block(5);
@@ -62,7 +62,7 @@ try {
     optional($lock)->release();
 }
 
-Lock::make('foo', 10)->block(5, function () {
+LockFactory::make('foo', 10)->block(5, function () {
     // 等待最多5秒后获取的锁...
 });
 ```

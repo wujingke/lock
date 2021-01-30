@@ -14,5 +14,8 @@ return [
     ],
     'file' => [
         'driver' => FriendsOfHyperf\Lock\Drivers\FileSystemLock::class,
+        'constructor' => [
+            'config' => [],
+        ],
     ],
 ];

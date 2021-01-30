@@ -29,7 +29,7 @@ class RedisLock extends AbstractLock
      * @param int $seconds
      * @param null|string $owner
      */
-    public function __construct($name, $seconds, $owner = null, array $config = [])
+    public function __construct($name, $seconds, $owner = null, array $constructor = [])
     {
         parent::__construct($name, $seconds, $owner);
 
