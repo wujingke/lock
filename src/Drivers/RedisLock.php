@@ -10,15 +10,14 @@ declare(strict_types=1);
  */
 namespace FriendsOfHyperf\Lock\Drivers;
 
-use Hyperf\Redis\Redis;
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Redis\RedisProxy;
 
 class RedisLock extends AbstractLock
 {
     /**
      * The Redis factory implementation.
      *
-     * @var Redis
+     * @var RedisProxy
      */
     protected $store;
 
@@ -33,7 +32,8 @@ class RedisLock extends AbstractLock
     {
         parent::__construct($name, $seconds, $owner);
 
-        $this->store = ApplicationContext::getContainer()->get(Redis::class);
+        $constructor = array_merge(['pool' => 'default'], $constructor);
+        $this->store = make(RedisProxy::class, $constructor);
     }
 
     /**

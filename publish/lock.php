@@ -11,11 +11,14 @@ declare(strict_types=1);
 return [
     'default' => [
         'driver' => FriendsOfHyperf\Lock\Drivers\RedisLock::class,
+        'constructor' => [
+            'pool' => 'default',
+        ],
     ],
     'file' => [
         'driver' => FriendsOfHyperf\Lock\Drivers\FileSystemLock::class,
         'constructor' => [
-            'config' => [],
+            'config' => ['prefix' => 'lock:'],
         ],
     ],
 ];
