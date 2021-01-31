@@ -57,7 +57,11 @@ class FileSystemLock extends AbstractLock
      */
     public function release()
     {
-        return $this->forceRelease();
+        if ($this->isOwnedByCurrentProcess()) {
+            return $this->store->delete($this->name);
+        }
+
+        return false;
     }
 
     /**
