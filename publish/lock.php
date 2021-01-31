@@ -10,19 +10,19 @@ declare(strict_types=1);
  */
 return [
     'default' => [
-        'driver' => FriendsOfHyperf\Lock\Drivers\RedisLock::class,
+        'driver' => FriendsOfHyperf\Lock\Driver\RedisLock::class,
         'constructor' => [
             'pool' => 'default',
         ],
     ],
     'file' => [
-        'driver' => FriendsOfHyperf\Lock\Drivers\FileSystemLock::class,
+        'driver' => FriendsOfHyperf\Lock\Driver\FileSystemLock::class,
         'constructor' => [
             'config' => ['prefix' => 'lock:'],
         ],
     ],
     'database' => [
-        'driver' => FriendsOfHyperf\Lock\Drivers\DatabaseLock::class,
+        'driver' => FriendsOfHyperf\Lock\Driver\DatabaseLock::class,
         'constructor' => [
             'pool' => 'default',
             'table' => 'locks',

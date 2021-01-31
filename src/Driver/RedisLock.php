@@ -8,16 +8,16 @@ declare(strict_types=1);
  * @document https://github.com/friendsofhyperf/lock/blob/main/README.md
  * @contact  huangdijia@gmail.com
  */
-namespace FriendsOfHyperf\Lock\Drivers;
+namespace FriendsOfHyperf\Lock\Driver;
 
-use Hyperf\Cache\Driver\FileSystemDriver;
+use Hyperf\Redis\RedisProxy;
 
-class FileSystemLock extends AbstractLock
+class RedisLock extends AbstractLock
 {
     /**
-     * The FileSystem factory implementation.
+     * The Redis factory implementation.
      *
-     * @var FileSystemDriver
+     * @var RedisProxy
      */
     protected $store;
 
@@ -32,8 +32,8 @@ class FileSystemLock extends AbstractLock
     {
         parent::__construct($name, $seconds, $owner);
 
-        $constructor = array_merge(['config' => ['prefix' => 'lock:']], $constructor);
-        $this->store = make(FileSystemDriver::class, $constructor);
+        $constructor = array_merge(['pool' => 'default'], $constructor);
+        $this->store = make(RedisProxy::class, $constructor);
     }
 
     /**
@@ -43,11 +43,11 @@ class FileSystemLock extends AbstractLock
      */
     public function acquire()
     {
-        if ($this->store->has($this->name)) {
-            return false;
+        if ($this->seconds > 0) {
+            return $this->store->set($this->name, $this->owner, ['NX', 'EX' => $this->seconds]) == true;
         }
 
-        return $this->store->set($this->name, $this->owner, $this->seconds) == true;
+        return $this->store->setnx($this->name, $this->owner) === 1;
     }
 
     /**
@@ -57,11 +57,7 @@ class FileSystemLock extends AbstractLock
      */
     public function release()
     {
-        if ($this->isOwnedByCurrentProcess()) {
-            return $this->store->delete($this->name);
-        }
-
-        return false;
+        return (bool) $this->store->eval(LuaScripts::releaseLock(), [$this->name, $this->owner], 1);
     }
 
     /**
@@ -69,7 +65,7 @@ class FileSystemLock extends AbstractLock
      */
     public function forceRelease()
     {
-        $this->store->delete($this->name);
+        $this->store->del($this->name);
     }
 
     /**

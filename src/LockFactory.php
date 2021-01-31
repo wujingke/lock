@@ -10,8 +10,8 @@ declare(strict_types=1);
  */
 namespace FriendsOfHyperf\Lock;
 
-use FriendsOfHyperf\Lock\Drivers\LockInterface;
-use FriendsOfHyperf\Lock\Drivers\RedisLock;
+use FriendsOfHyperf\Lock\Driver\LockInterface;
+use FriendsOfHyperf\Lock\Driver\RedisLock;
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\Utils\ApplicationContext;
 use InvalidArgumentException;
