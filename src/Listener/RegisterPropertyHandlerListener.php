@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace FriendsOfHyperf\Lock\Listener;
 
 use FriendsOfHyperf\Lock\Annotation\Lock;
-use FriendsOfHyperf\Lock\LockFactory;
+use FriendsOfHyperf\Lock\LockProxy;
 use Hyperf\Di\Definition\PropertyHandlerManager;
 use Hyperf\Di\ReflectionManager;
 use Hyperf\Event\Contract\ListenerInterface;
@@ -46,7 +46,7 @@ class RegisterPropertyHandlerListener implements ListenerInterface
                 $owner = $annotation->owner;
                 $driver = $annotation->driver;
 
-                $reflectionProperty->setValue($object, LockFactory::make($name, $seconds, $owner, $driver));
+                $reflectionProperty->setValue($object, new LockProxy($name, $seconds, $owner, $driver));
             }
         });
     }
