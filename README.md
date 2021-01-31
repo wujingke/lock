@@ -36,16 +36,13 @@ if ($lock->get()) {
 }
 ```
 
-`get` 方法也可以接收一个闭包。在闭包执行之后，将会自动释放锁：
-The get method also accepts a closure. After the closure is executed, Will automatically release the lock:
+The `get` method also accepts a closure. After the closure is executed, Will automatically release the lock:
 
 ```php
 LockFactory::make('foo')->get(function () {
     // Lock acquired indefinitely and automatically released...
 });
 ```
-
-如果你在请求时锁无法使用，你可以控制等待指定的秒数。如果在指定的时间限制内无法获取锁，则会抛出 `FriendsOfHyperf\Lock\Exception\LockTimeoutException`
 
 If the lock is not available at the moment you request it, you may instruct the lock to wait for a specified number of seconds. If the lock can not be acquired within the specified time limit, an `FriendsOfHyperf\Lock\Exception\LockTimeoutException` will be thrown:
 
