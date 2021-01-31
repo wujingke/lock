@@ -46,6 +46,7 @@ class ConfigProvider
                     'destination' => BASE_PATH . '/migrations/2021_01_31_000000_create_lock_table.php',
                 ],
             ],
+            'lock' => include __DIR__ . '/../publish/lock.php',
         ];
     }
 }
