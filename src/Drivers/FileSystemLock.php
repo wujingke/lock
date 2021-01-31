@@ -15,7 +15,7 @@ use Hyperf\Cache\Driver\FileSystemDriver;
 class FileSystemLock extends AbstractLock
 {
     /**
-     * The Redis factory implementation.
+     * The FileSystem factory implementation.
      *
      * @var FileSystemDriver
      */

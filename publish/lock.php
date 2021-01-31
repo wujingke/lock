@@ -21,4 +21,11 @@ return [
             'config' => ['prefix' => 'lock:'],
         ],
     ],
+    'database' => [
+        'driver' => FriendsOfHyperf\Lock\Drivers\DatabaseLock::class,
+        'constructor' => [
+            'pool' => 'default',
+            'table' => 'locks',
+        ],
+    ],
 ];
