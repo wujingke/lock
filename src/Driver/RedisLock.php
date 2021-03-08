@@ -17,7 +17,7 @@ class RedisLock extends AbstractLock
     /**
      * The Redis factory implementation.
      *
-     * @var RedisProxy
+     * @var \Redis
      */
     protected $store;
 
