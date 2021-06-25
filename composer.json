@@ -16,7 +16,7 @@
         "nesbot/carbon": "^2.44"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.04",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "hyperf/di": "^2.1",
         "hyperf/framework": "^2.1",
         "phpstan/phpstan": "^0.12",
